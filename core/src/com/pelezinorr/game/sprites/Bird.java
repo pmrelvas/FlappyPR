@@ -1,5 +1,7 @@
 package com.pelezinorr.game.sprites;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
@@ -16,6 +18,7 @@ public class Bird {
     private Rectangle bounds;
     private Animation birdAnimation;
     private Texture texture;
+    private Sound flap;
 
 
     public Bird(int x, int y) {
@@ -24,6 +27,7 @@ public class Bird {
         texture = new Texture("birdanimation.png");
         birdAnimation = new Animation(new TextureRegion(texture), 3, 0.5f);
         bounds = new Rectangle(x, y, texture.getWidth()/3, texture.getHeight());
+        flap = Gdx.audio.newSound(Gdx.files.internal("sfx_wing.ogg"));
     }
 
     public Vector3 getPosition() {
@@ -52,6 +56,7 @@ public class Bird {
 
     public void jump() {
         velocity.y = 250;
+        flap.play(0.5f);
     }
 
     public Rectangle getBounds() {
@@ -60,5 +65,6 @@ public class Bird {
 
     public void dispose() {
         texture.dispose();
+        flap.dispose();
     }
 }
